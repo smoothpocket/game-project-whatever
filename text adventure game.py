@@ -245,10 +245,10 @@ while True:
                                             crackhead.base_attack = 8
                                             print("The crackhead attack multiplier is now 8.")
                                         move = input("Will you throw a [punch], or a [kick]? ")
-                                        if move == "kick":
-                                            combat2(francis, crackhead)
                                         if move == "punch":
                                             combat1(francis, crackhead)
+                                        if move == "kick":
+                                            combat2(francis, crackhead)
                                         print("Crackhead swings at you for 10 damage!")
                                         francis.hp -= 10
                                         if francis.hp <= 0:
