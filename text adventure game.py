@@ -1,5 +1,6 @@
 import random
 from textwrap import dedent
+from __future__ import print_function
 
 # Character lists. Each character has a list of profile data as:
 # [Name, description/hint, HP, baseATK, attack1Name, attack1Uses, attack1Multiplier, attack2Name, attack2Uses, attack2Multiplier, baseDEF, luck (1-100), gold]
@@ -28,12 +29,11 @@ def print_map():
         |______|___|___|__Entrance_|__________|
     """))
 
-def print_gps(list):
-    # Shows location
-    x = 0
-    while x < 5:
-        print(list[x][0], " ", list[x][1], " ", list[x][2], " ", list[x][3], " ", list[x][4], " ")
-        x += 1
+def print_gps():
+    for i in range(5):
+        for j in range(5):
+            print(gps_grid[i][j], " ", end="")
+        print()
 
 #D.C.
 def print_stats():
@@ -195,7 +195,7 @@ while True:
                 clicker = True
 
             elif user_input == "gps":
-                print_gps(gps_grid)
+                print_gps()
                 clicker = True
 
             if not in_combat:
