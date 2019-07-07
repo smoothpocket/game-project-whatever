@@ -70,13 +70,12 @@ def print_stats():
     print('gold: ', francis.gold)
 
 def pick_item(item, item_list):
-    '''Once an item is obtained, this function can be called to select it from a menu.'''
+    """Once an item is obtained, this function can be called to select it from a menu."""
     item_list.append(item)
     print(item, "has been added to your inventory!")
 
 def restart_after_death(answer):
-    '''After the character dies, this function is called to
-    ask the user if he wants to restart or quit the game.'''
+    """After the character dies, this function is called to ask the user if he wants to restart or quit the game."""
     if answer=="y":
         print('Start at the beginning')
     else:
