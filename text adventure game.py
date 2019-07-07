@@ -8,11 +8,11 @@ items=[]
 crackhead=['crackhead', 'he needs his fix', 20, 5, "Injection", 2, 4, 'Scratch', 100, 1.5, 5, 50, 5]
 
 #The grid that only shows where the character is (5x5), char is denoted by an "X"
-gpsGrid=[['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','X','-']]
-#breadCrumbGrid shows what spaces francis has travelled
-breadCrumbGrid =[['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','+','-']]
+gps_grid=[['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','X','-']]
+#breadcrumb_grid shows what spaces francis has travelled
+breadcrumb_grid =[['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','+','-']]
 
-def mapPrinter():
+def map_printer():
     print("_______________________________________")
     print("|Museum------T--------------Field     |")
     print("|______|___|_1_|___________|__________|")
@@ -26,7 +26,7 @@ def mapPrinter():
     print("|______|___|___|__Entrance_|__________|")
 
 
-def gpsPrinter(list):
+def gps_printer(list):
     # Shows location
     x = 0
     while x < 5:
@@ -34,13 +34,13 @@ def gpsPrinter(list):
         x += 1
 
 #D.C.
-def pickItem(item, itemList):
+def pick_item(item, item_list):
     '''Once an item is obtained, this function can be called to select it from a menu.'''
-    itemList.append(item)
+    item_list.append(item)
     print(item, "has been added to your inventory!")
 
 #D.C.
-def restartAfterDeath(answer):
+def restart_after_death(answer):
     '''After the character dies, this function is called to
     ask the user if he wants to restart or quit the game.'''
     if answer=="y":
@@ -49,7 +49,7 @@ def restartAfterDeath(answer):
         print("Quit the game")
 
 #D.C.
-def checkStats():
+def check_stats():
     print("Name: ", francis[0])
     print('Description: ', francis[1])
     print('HP: ', francis[2])
@@ -65,7 +65,7 @@ def checkStats():
     print('gold: ', francis[12])
 
 #D.C.
-def pickItem(item, itemList):
+def pick_item(item, itemList):
     '''Once an item is obtained, this function can be called to select it from a menu.'''
     itemList.append(item)
     print(item, "has been added to your inventory!")
@@ -110,9 +110,9 @@ def combat2(attacker, defender):
 def doomsday(attacker, defender):
     print("The defender is badly wounded and at the doors of death. In his last efforts, he hopes his luck will give him a second breath...")
     # random.randint(0,100) makes a random number including 0 to including 100. attacker/defender[11] is the luck multiplier
-    deathNumA = ((random.randint(0, 100)) * attacker[11]) / 1  # "/1" to round to nearest whole number
-    deathNumB = ((random.randint(0, 100)) * defender[11]) / 1
-    if deathNumA > deathNumB:
+    death_num_a = ((random.randint(0, 100)) * attacker[11]) / 1  # "/1" to round to nearest whole number
+    death_num_b = ((random.randint(0, 100)) * defender[11]) / 1
+    if death_num_a > death_num_b:
         print("Battered and bruised, the defender is unable to recover before the attacker throws his killing blow.")
         print(defender[0] + " has died.")
         if defender[0] == "Francis":
@@ -162,12 +162,12 @@ def doomsday(attacker, defender):
             print()
             print()
             return True
-    elif deathNumB > deathNumA:
+    elif death_num_b > death_num_a:
         print("Despite all odds, a miracle of luck recovers the fallen defender, reviving him with 1HP")
         print(defender[0] + " has been revived with 1HP and escapes.")
         return False
 
-def faceWall(victim):
+def face_wall(victim):
     print("Francis, not consulting his map or common sense before deciding where he wanted to go,")
     print("turned and walked directly into the wall of a nearby building.")
     print("This sheer act of stupidity causes a nosebleed that reduces Francis' health significantly")
@@ -179,10 +179,10 @@ while True:
     print("___________________________________")
     print("A text-based adventure game by Nick Lloyd and Demetrius Cunningham")
     print("[Q]Start Game         [Z]Quit Game")
-    powerOn = ''
-    powerOn = input("Input:")
+    power_on = ''
+    power_on = input("Input:")
 
-    if powerOn == "Q":
+    if power_on == "Q":
         print("\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n ")
         print("Francis Magilicutty, private eye, receives a case of a missing girl said to be spotted near an ")
         print("abandoned college, Chapati Academy. Arriving on campus, the calm, Fall climate was nothing but ")
@@ -191,16 +191,16 @@ while True:
         print()
         print("*This is a text-based adventure game using a grid of 'squares'. If you're ever lost, type 'help' for a list of commands*")
 
-        inCombat = False
-        francisDead = False
+        in_combat = False
+        francis_dead = False
         has_moved_a_square_this_turn = False
         clicker = False
-        while francisDead == False:
+        while francis_dead == False:
             clicker = False
             print()
-            userInput = input("Enter a command: ")
+            user_input = input("Enter a command: ")
 
-            if userInput == "help":
+            if user_input == "help":
                 print(" COMMAND:                       EFFECT:")
                 print("'move north/south/east/west'...moves character to the square above/below/left/right of the square they're on")
                 print("'map'..........................pulls up the map that shows buildings, paths, and intersections")
@@ -211,32 +211,32 @@ while True:
                 print("'exit'.........................exits the program (WARNING: Your progress will not be saved!)")
                 print("'my stats'.......................overviews Francis' updated stats")
 
-            elif userInput == "my stats":
-                checkStats()
+            elif user_input == "my stats":
+                check_stats()
                 clicker = True
-            elif userInput == "exit":
+            elif user_input == "exit":
                 print("Are you sure you want to quit? Progress will not be saved!")
                 clicker = True
                 response = input("Press [y] if you're sure, or any other letter to continue: ")
                 if response == "y":
                     print("GAME OVER")
                     exit()
-            elif userInput == "map":
-                mapPrinter()
+            elif user_input == "map":
+                map_printer()
                 clicker = True
-            elif userInput == "gps":
-                gpsPrinter(gpsGrid)
+            elif user_input == "gps":
+                gps_printer(gpsGrid)
                 clicker = True
 
-            if inCombat == False:
+            if in_combat == False:
 
 
                 #move checks
-                if userInput == "move north":
-                    if gpsGrid[2][3]=="X":
-                        engiSwitch = False
-                        while engiSwitch == False:
-                            engiSwitch = True
+                if user_input == "move north":
+                    if gps_grid[2][3]=="X":
+                        engi_switch = False
+                        while engi_switch == False:
+                            engi_switch = True
                             x = 0
                             print('You are at the Engineering Building. Surprisingly, the nerd smell still remains.')
                             print('[1]Chemical Engineering Room')
@@ -246,7 +246,7 @@ while True:
                                     choice = input(
                                         "Looking like an ordinary chem, you see some chemical that might come in handy. Do you want it(y/n): ")
                                     if choice == 'y':
-                                        pickItem("chemical", items)
+                                        pick_item("chemical", items)
                                         print("As soon as you were about leave, a wild crackhead appeared. He asks you 'Do you the fix?'.")
                                         print("You reply with 'No', being the good student you are. He pulls out a needle, ready to fight")
                                         while crackhead[2] > 0:
@@ -275,26 +275,26 @@ while True:
                                     x = 20
                             else:
                                 print("The only option is 1 retard.")
-                                engiSwitch = False
-                        gpsGrid[2][3] = "-"
-                        gpsGrid[1][3] = "X"
+                                engi_switch = False
+                        gps_grid[2][3] = "-"
+                        gps_grid[1][3] = "X"
                         #all the engineering building stuff (he enters)
-                    elif gpsGrid[1][2]=="X":
-                        gpsGrid[1][2] = "-"
-                        gpsGrid[0][2] = "X"
+                    elif gps_grid[1][2]=="X":
+                        gps_grid[1][2] = "-"
+                        gps_grid[0][2] = "X"
                         #code for the fork in the road
-                    elif gpsGrid[2][2] == "X":
-                        gpsGrid[2][2] = "-"
-                        gpsGrid[1][2] = "X"
+                    elif gps_grid[2][2] == "X":
+                        gps_grid[2][2] = "-"
+                        gps_grid[1][2] = "X"
                         #code at that path
-                    elif gpsGrid[3][3] == "X":
-                        gpsGrid[3][3] = "-"
-                        gpsGrid[2][3] = "X"
+                    elif gps_grid[3][3] == "X":
+                        gps_grid[3][3] = "-"
+                        gps_grid[2][3] = "X"
                         #code at that path
-                    elif gpsGrid[4][3] == "X":
+                    elif gps_grid[4][3] == "X":
                         print("Francis paces forwards, approaching a slight split in the path.")
                         print("A light scent of BO drifts into his nostrils from the path to the left")
-                        gpsGrid[4][3] = "-"
-                        gpsGrid[3][3] = "X"
+                        gps_grid[4][3] = "-"
+                        gps_grid[3][3] = "X"
                     else:
-                        francis[2] = faceWall(francis)
+                        francis[2] = face_wall(francis)
