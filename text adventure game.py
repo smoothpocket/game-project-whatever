@@ -12,7 +12,6 @@ gpsGrid=[['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','-','-'],['-',
 #breadCrumbGrid shows what spaces francis has travelled
 breadCrumbGrid =[['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','+','-']]
 
-#prints map (doesn't change so it'll just be a print function)
 def mapPrinter():
     print("_______________________________________")
     print("|Museum------T--------------Field     |")
