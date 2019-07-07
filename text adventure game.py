@@ -1,4 +1,5 @@
 import random
+from textwrap import dedent
 
 # Character lists. Each character has a list of profile data as:
 # [Name, description/hint, HP, baseATK, attack1Name, attack1Uses, attack1Multiplier, attack2Name, attack2Uses, attack2Multiplier, baseDEF, luck (1-100), gold]
@@ -13,17 +14,20 @@ gps_grid=[['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','-','-'],['-'
 breadcrumb_grid =[['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','+','-']]
 
 def print_map():
-    print("_______________________________________")
-    print("|Museum------T--------------Field     |")
-    print("|______|___|_1_|___________|__________|")
-    print("|      |   | 1 |Engineering|          |")
-    print("|______|___|_1_|____1______|__________|")
-    print("|      |   | L-|----+-------Sneed Hall|")
-    print("|______|___|___|____1______|__________|")
-    print("|      |Rec---------J      |          |")
-    print("|______|___|___|____1______|__________|")
-    print("|      |   |   |           |          |")
-    print("|______|___|___|__Entrance_|__________|")
+    print(dedent("""
+        _______________________________________
+        |Museum------T--------------Field     |
+        |______|___|_1_|___________|__________|
+        |      |   | 1 |Engineering|          |
+        |______|___|_1_|____1______|__________|
+        |      |   | L-|----+-------Sneed Hall|
+        |______|___|___|____1______|__________|
+        |      |Rec---------J      |          |
+        |______|___|___|____1______|__________|
+        |      |   |   |           |          |
+        |______|___|___|__Entrance_|__________|
+    """))
+
 
 
 def print_gps(list):
@@ -111,51 +115,11 @@ def doomsday(attacker, defender):
         print("Battered and bruised, the defender is unable to recover before the attacker throws his killing blow.")
         print(defender[0] + " has died.")
         if defender[0] == "Francis":
-            print("GAME OVER")
-            print("GAME OVER")
-            print("Returning to title screen and wiping board...")
-            print("Returning to title screen and wiping board...")
-            print("Returning to title screen and wiping board...")
-            print("Returning to title screen and wiping board...")
-            print("Returning to title screen and wiping board...")
-            print("Returning to title screen and wiping board...")
-            print("Returning to title screen and wiping board...")
-            print("Returning to title screen and wiping board...")
-            print("Returning to title screen and wiping board...")
-            print("Returning to title screen and wiping board...")
-            print("Returning to title screen and wiping board...")
-            print("Returning to title screen and wiping board...")
-            print()
-            print()
-            print()
-            print()
-            print()
-            print()
-            print()
-            print()
-            print()
-            print()
-            print()
-            print()
-            print()
-            print()
-            print()
-            print()
-            print()
-            print()
-            print()
-            print()
-            print()
-            print()
-            print()
-            print()
-            print()
-            print()
-            print()
-            print()
-            print()
-            print()
-            print()
+            print("\n".join(
+                (["GAME OVER"] * 2) +
+                (["Returning to title screen and wiping board..."]) * 2) +
+                (["\n" * 30])
+            )
             return True
     elif death_num_b > death_num_a:
         print("Despite all odds, a miracle of luck recovers the fallen defender, reviving him with 1HP")
@@ -163,28 +127,41 @@ def doomsday(attacker, defender):
         return False
 
 def face_wall(victim):
-    print("Francis, not consulting his map or common sense before deciding where he wanted to go,")
-    print("turned and walked directly into the wall of a nearby building.")
-    print("This sheer act of stupidity causes a nosebleed that reduces Francis' health significantly")
+    print(dedent("""
+        Francis, not consulting his map or common sense before deciding where he wanted
+        to go, turned and walked directly into the wall of a nearby building. This sheer
+        act of stupidity causes a nosebleed that reduces Francis' health significantly.
+    """))
+
     victim[2] = victim[2]-10
     return victim[2]
 
 while True:
-    print("The Missing Miss of Chapati Academy")
-    print("___________________________________")
-    print("A text-based adventure game by Nick Lloyd and Demetrius Cunningham")
-    print("[Q]Start Game         [Z]Quit Game")
+    print(dedent("""
+        The Missing Miss of Chapati Academy
+        -----------------------------------
+        
+        A text-based adventure game by Nick Lloyd and Demetrius Cunningham
+        
+        [Q] Start Game
+        [Z] Quit Game
+    """))
+
     power_on = ''
     power_on = input("Input:")
 
     if power_on == "Q":
-        print("\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n ")
-        print("Francis Magilicutty, private eye, receives a case of a missing girl said to be spotted near an ")
-        print("abandoned college, Chapati Academy. Arriving on campus, the calm, Fall climate was nothing but ")
-        print("eerie. After paying the Uber driver,with no tip, he arrives on the campus 'Just Talk' area (with his map and gps) and cleans up")
-        print("his mess.")
-        print()
-        print("*This is a text-based adventure game using a grid of 'squares'. If you're ever lost, type 'help' for a list of commands*")
+        print("\n" * 40)
+        print(dedent("""
+            Francis Magilicutty, private eye, receives a case of a missing girl said to be
+            spotted near an abandoned college, Chapati Academy. Arriving on campus, the calm
+            fall climate was nothing but eerie. After paying the Uber driver with no tip, he
+            arrives on the campus 'Just Talk' area (with his map and gps) and cleans up his
+            mess.
+            
+            * This is a text-based adventure game using a grid of 'squares'. *
+            * If you're even lost, type 'help' for a list of commands.       *
+        """))
 
         in_combat = False
         francis_dead = False
@@ -192,19 +169,20 @@ while True:
         clicker = False
         while francis_dead == False:
             clicker = False
-            print()
-            user_input = input("Enter a command: ")
+            user_input = input("\nEnter a command: ")
 
             if user_input == "help":
-                print(" COMMAND:                       EFFECT:")
-                print("'move north/south/east/west'...moves character to the square above/below/left/right of the square they're on")
-                print("'map'..........................pulls up the map that shows buildings, paths, and intersections")
-                print("'mKey'.........................helps explain how to read map")
-                print("'gps'..........................pulls up the square you are at in the college, shown as an 'X'")
-                print("'[insert name] stats'..........displays known stats of person selected. unknown stats will show up as '???'")
-                print("'combat commands'...............shows available commands while in combat")
-                print("'exit'.........................exits the program (WARNING: Your progress will not be saved!)")
-                print("'my stats'.......................overviews Francis' updated stats")
+                print(dedent("""
+                    COMMAND:                       EFFECT
+                    'move north/south/east/west'...moves character to the square above/below/left/right of the square they're on
+                    'map'..........................pulls up the map that shows buildings, paths, and intersections
+                    'mKey'.........................helps explain how to read map
+                    'gps'..........................pulls up the square you are at in the college, shown as an 'X'
+                    '[insert name] stats'..........displays known stats of person selected. unknown stats will show up as '???'
+                    'combat commands'..............shows available commands while in combat
+                    'exit'.........................exits the program (WARNING: Your progress will not be saved!)
+                    'my stats'.....................overviews Francis' updated stats
+                """))
 
             elif user_input == "my stats":
                 print_stats()
@@ -220,7 +198,7 @@ while True:
                 print_map()
                 clicker = True
             elif user_input == "gps":
-                print_gps(gpsGrid)
+                print_gps(gps_grid)
                 clicker = True
 
             if in_combat == False:
@@ -233,8 +211,11 @@ while True:
                         while engi_switch == False:
                             engi_switch = True
                             x = 0
-                            print('You are at the Engineering Building. Surprisingly, the nerd smell still remains.')
-                            print('[1]Chemical Engineering Room')
+                            print(dedent("""
+                                You are at the Engineering Building. Surprisingly, the nerd smell still remains.
+                                
+                                [1] Chemical Engineering Room
+                            """))
                             an = input('Where do you want to go now?: ')
                             if an == '1':
                                 while x < 10:
@@ -242,8 +223,11 @@ while True:
                                         "Looking like an ordinary chem, you see some chemical that might come in handy. Do you want it(y/n): ")
                                     if choice == 'y':
                                         pick_item("chemical", items)
-                                        print("As soon as you were about leave, a wild crackhead appeared. He asks you 'Do you the fix?'.")
-                                        print("You reply with 'No', being the good student you are. He pulls out a needle, ready to fight")
+                                        print(dedent("""
+                                            As soon as you were about to leave, a wild crackhead appeared. He asks you 'Do you the fix?',
+                                            You reply with 'No', being the good student you are. He pulls out a needle, ready to fight.
+                                        """))
+
                                         while crackhead[2] > 0:
                                             if crackhead[2] < 5:
                                                 crackhead[6] = 16
@@ -269,7 +253,7 @@ while True:
                                         print("I guess you won't need that will you.")
                                     x = 20
                             else:
-                                print("The only option is 1 retard.")
+                                print("The only option is 1 so far.")
                                 engi_switch = False
                         gps_grid[2][3] = "-"
                         gps_grid[1][3] = "X"
@@ -287,8 +271,11 @@ while True:
                         gps_grid[2][3] = "X"
                         #code at that path
                     elif gps_grid[4][3] == "X":
-                        print("Francis paces forwards, approaching a slight split in the path.")
-                        print("A light scent of BO drifts into his nostrils from the path to the left")
+                        print(dedent("""
+                            Francis paces forwards, approaching a slight split in the path.
+                            A light scent of BO drifts into his nostrils from the path to the left
+                        """))
+
                         gps_grid[4][3] = "-"
                         gps_grid[3][3] = "X"
                     else:
