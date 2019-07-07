@@ -65,14 +65,6 @@ def restart_after_death(answer):
     else:
         print("Quit the game")
 
-
-
-#D.C.
-def pick_item(item, itemList):
-    '''Once an item is obtained, this function can be called to select it from a menu.'''
-    itemList.append(item)
-    print(item, "has been added to your inventory!")
-
 # attacker and defender objects are lists with their stats, preassigned from character status
 # separating into two combats for attack1 and attack2
 def combat1(attacker, defender):
