@@ -158,12 +158,7 @@ while True:
             * If you're even lost, type 'help' for a list of commands.       *
         """))
 
-        in_combat = False
-        francis_is_dead = False
-        has_moved_a_square_this_turn = False
-        clicker = False
-        while not francis_is_dead:
-            clicker = False
+        while True:
             user_input = input("\nEnter a command: ")
 
             if user_input == "help":
@@ -181,95 +176,90 @@ while True:
 
             elif user_input == "my stats":
                 print_stats()
-                clicker = True
 
             elif user_input == "exit":
                 print("Are you sure you want to quit? Progress will not be saved!")
-                clicker = True
                 if input("Press [y] if you're sure, or any other letter to continue: ") == "y":
                     print("GAME OVER")
                     exit()
 
             elif user_input == "map":
                 print_map()
-                clicker = True
 
             elif user_input == "gps":
                 print_gps()
-                clicker = True
 
-            if not in_combat:
-                if user_input == "move north":
-                    if gps_grid[2][3]=="X":
-                        engi_switch = False
-                        while not engi_switch:
-                            engi_switch = True
-                            x = 0
-                            print(dedent("""
-                                You are at the Engineering Building. Surprisingly, the nerd smell still remains.
-                                
-                                [1] Chemical Engineering Room
-                            """))
-                            if input('Where do you want to go now?: ') == '1':
-                                while x < 10:
-                                    choice = input(
-                                        "Looking like an ordinary chem, you see some chemical that might come in handy. Do you want it(y/n): ")
-                                    if choice == 'y':
-                                        pick_item("chemical", items)
-                                        print(dedent("""
-                                            As soon as you were about to leave, a wild crackhead appeared. He asks you 'Do you the fix?',
-                                            You reply with 'No', being the good student you are. He pulls out a needle, ready to fight.
-                                        """))
-
-                                        while crackhead[2] > 0:
-                                            if crackhead[2] < 5:
-                                                crackhead[6] = 16
-                                                print("The crackhead attackmultiplier is now 16.")
-                                            elif crackhead[2] < 10:
-                                                crackhead[6] = 12
-                                                print("The crackhead attackmultiplier is now 12.")
-                                            elif crackhead[2] < 15:
-                                                crackhead[6] = 8
-                                                print("The crackhead attackmultiplier is now 8.")
-                                            move = input("Will you throw a [punch], or a [kick]? ")
-                                            if move == "kick":
-                                                combat2(francis, crackhead)
-                                            if move == "punch":
-                                                combat1(francis, crackhead)
-                                            print("Crackhead swings at you for 10 damage!")
-                                            francis[2] = francis[2]-10
-                                            if francis[2] < 1:
-                                                doomsday(crackhead, francis)
-
-
-                                    else:
-                                        print("I guess you won't need that will you.")
-                                    x = 20
-                            else:
-                                print("The only option is 1 so far.")
-                                engi_switch = False
-                        gps_grid[2][3] = "-"
-                        gps_grid[1][3] = "X"
-                        #all the engineering building stuff (he enters)
-                    elif gps_grid[1][2]=="X":
-                        gps_grid[1][2] = "-"
-                        gps_grid[0][2] = "X"
-                        #code for the fork in the road
-                    elif gps_grid[2][2] == "X":
-                        gps_grid[2][2] = "-"
-                        gps_grid[1][2] = "X"
-                        #code at that path
-                    elif gps_grid[3][3] == "X":
-                        gps_grid[3][3] = "-"
-                        gps_grid[2][3] = "X"
-                        #code at that path
-                    elif gps_grid[4][3] == "X":
+            elif user_input == "move north":
+                if gps_grid[2][3]=="X":
+                    engi_switch = False
+                    while not engi_switch:
+                        engi_switch = True
+                        x = 0
                         print(dedent("""
-                            Francis paces forwards, approaching a slight split in the path.
-                            A light scent of BO drifts into his nostrils from the path to the left
+                            You are at the Engineering Building. Surprisingly, the nerd smell still remains.
+                            
+                            [1] Chemical Engineering Room
                         """))
+                        if input('Where do you want to go now?: ') == '1':
+                            while x < 10:
+                                choice = input(
+                                    "Looking like an ordinary chem, you see some chemical that might come in handy. Do you want it(y/n): ")
+                                if choice == 'y':
+                                    pick_item("chemical", items)
+                                    print(dedent("""
+                                        As soon as you were about to leave, a wild crackhead appeared. He asks you 'Do you the fix?',
+                                        You reply with 'No', being the good student you are. He pulls out a needle, ready to fight.
+                                    """))
 
-                        gps_grid[4][3] = "-"
-                        gps_grid[3][3] = "X"
-                    else:
-                        francis[2] = face_wall(francis)
+                                    while crackhead[2] > 0:
+                                        if crackhead[2] < 5:
+                                            crackhead[6] = 16
+                                            print("The crackhead attackmultiplier is now 16.")
+                                        elif crackhead[2] < 10:
+                                            crackhead[6] = 12
+                                            print("The crackhead attackmultiplier is now 12.")
+                                        elif crackhead[2] < 15:
+                                            crackhead[6] = 8
+                                            print("The crackhead attackmultiplier is now 8.")
+                                        move = input("Will you throw a [punch], or a [kick]? ")
+                                        if move == "kick":
+                                            combat2(francis, crackhead)
+                                        if move == "punch":
+                                            combat1(francis, crackhead)
+                                        print("Crackhead swings at you for 10 damage!")
+                                        francis[2] = francis[2]-10
+                                        if francis[2] < 1:
+                                            doomsday(crackhead, francis)
+
+
+                                else:
+                                    print("I guess you won't need that will you.")
+                                x = 20
+                        else:
+                            print("The only option is 1 so far.")
+                            engi_switch = False
+                    gps_grid[2][3] = "-"
+                    gps_grid[1][3] = "X"
+                    #all the engineering building stuff (he enters)
+                elif gps_grid[1][2]=="X":
+                    gps_grid[1][2] = "-"
+                    gps_grid[0][2] = "X"
+                    #code for the fork in the road
+                elif gps_grid[2][2] == "X":
+                    gps_grid[2][2] = "-"
+                    gps_grid[1][2] = "X"
+                    #code at that path
+                elif gps_grid[3][3] == "X":
+                    gps_grid[3][3] = "-"
+                    gps_grid[2][3] = "X"
+                    #code at that path
+                elif gps_grid[4][3] == "X":
+                    print(dedent("""
+                        Francis paces forwards, approaching a slight split in the path.
+                        A light scent of BO drifts into his nostrils from the path to the left
+                    """))
+
+                    gps_grid[4][3] = "-"
+                    gps_grid[3][3] = "X"
+                else:
+                    francis[2] = face_wall(francis)
