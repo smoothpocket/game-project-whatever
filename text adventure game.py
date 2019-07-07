@@ -4,7 +4,6 @@ from textwrap import dedent
 
 # Character lists. Each character has a list of profile data as:
 # [Name, description/hint, HP, baseATK, attack1Name, attack1Uses, attack1Multiplier, attack2Name, attack2Uses, attack2Multiplier, baseDEF, luck (1-100), gold]
-#D.C
 francis=["Francis", "the hero", 100, 10, "Punch", 5, 2, "Kick", 10, 4, 5, 50, 20]
 items=[]
 crackhead=['crackhead', 'he needs his fix', 20, 5, "Injection", 2, 4, 'Scratch', 100, 1.5, 5, 50, 5]
@@ -35,7 +34,6 @@ def print_gps():
             print(gps_grid[i][j], " ", end="")
         print()
 
-#D.C.
 def print_stats():
     print("Name: ", francis[0])
     print('Description: ', francis[1])
@@ -51,14 +49,11 @@ def print_stats():
     print('luck: ', francis[11])
     print('gold: ', francis[12])
 
-
-#D.C.
 def pick_item(item, item_list):
     '''Once an item is obtained, this function can be called to select it from a menu.'''
     item_list.append(item)
     print(item, "has been added to your inventory!")
 
-#D.C.
 def restart_after_death(answer):
     '''After the character dies, this function is called to
     ask the user if he wants to restart or quit the game.'''
