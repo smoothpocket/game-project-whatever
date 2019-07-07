@@ -122,6 +122,7 @@ def doomsday(attacker, defender):
     else:
         print("Despite all odds, a miracle of luck recovers the fallen defender, reviving him with 1HP")
         print(defender.name + " has been revived with 1HP and escapes.")
+        defender.hp = 1
         return False
 
 def face_wall():
