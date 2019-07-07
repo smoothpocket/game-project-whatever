@@ -1,6 +1,6 @@
+from __future__ import print_function
 import random
 from textwrap import dedent
-from __future__ import print_function
 
 # Character lists. Each character has a list of profile data as:
 # [Name, description/hint, HP, baseATK, attack1Name, attack1Uses, attack1Multiplier, attack2Name, attack2Uses, attack2Multiplier, baseDEF, luck (1-100), gold]
@@ -119,7 +119,7 @@ def doomsday(attacker, defender):
                 (["\n" * 30])
             )
             return True
-    elif death_num_b > death_num_a:
+    else:
         print("Despite all odds, a miracle of luck recovers the fallen defender, reviving him with 1HP")
         print(defender[0] + " has been revived with 1HP and escapes.")
         return False
