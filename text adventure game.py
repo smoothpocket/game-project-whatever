@@ -12,7 +12,7 @@ gps_grid=[['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','-','-'],['-'
 #breadcrumb_grid shows what spaces francis has travelled
 breadcrumb_grid =[['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','+','-']]
 
-def map_printer():
+def print_map():
     print("_______________________________________")
     print("|Museum------T--------------Field     |")
     print("|______|___|_1_|___________|__________|")
@@ -26,12 +26,29 @@ def map_printer():
     print("|______|___|___|__Entrance_|__________|")
 
 
-def gps_printer(list):
+def print_gps(list):
     # Shows location
     x = 0
     while x < 5:
         print(list[x][0], " ", list[x][1], " ", list[x][2], " ", list[x][3], " ", list[x][4], " ")
         x += 1
+
+#D.C.
+def print_stats():
+    print("Name: ", francis[0])
+    print('Description: ', francis[1])
+    print('HP: ', francis[2])
+    print("BaseATK: ", francis[3])
+    print('attack1Name: ', francis[4])
+    print('attack1Uses: ', francis[5])
+    print('attack1Multiplier: ', francis[6])
+    print('attack2Name: ', francis[7])
+    print('attack2Uses: ', francis[8])
+    print('attack2Multiplier: ', francis[9])
+    print('baseDEF: ', francis[10])
+    print('luck: ', francis[11])
+    print('gold: ', francis[12])
+
 
 #D.C.
 def pick_item(item, item_list):
@@ -48,21 +65,7 @@ def restart_after_death(answer):
     else:
         print("Quit the game")
 
-#D.C.
-def check_stats():
-    print("Name: ", francis[0])
-    print('Description: ', francis[1])
-    print('HP: ', francis[2])
-    print("BaseATK: ", francis[3])
-    print('attack1Name: ', francis[4])
-    print('attack1Uses: ', francis[5])
-    print('attack1Multiplier: ', francis[6])
-    print('attack2Name: ', francis[7])
-    print('attack2Uses: ', francis[8])
-    print('attack2Multiplier: ', francis[9])
-    print('baseDEF: ', francis[10])
-    print('luck: ', francis[11])
-    print('gold: ', francis[12])
+
 
 #D.C.
 def pick_item(item, itemList):
@@ -212,7 +215,7 @@ while True:
                 print("'my stats'.......................overviews Francis' updated stats")
 
             elif user_input == "my stats":
-                check_stats()
+                print_stats()
                 clicker = True
             elif user_input == "exit":
                 print("Are you sure you want to quit? Progress will not be saved!")
@@ -222,10 +225,10 @@ while True:
                     print("GAME OVER")
                     exit()
             elif user_input == "map":
-                map_printer()
+                print_map()
                 clicker = True
             elif user_input == "gps":
-                gps_printer(gpsGrid)
+                print_gps(gpsGrid)
                 clicker = True
 
             if in_combat == False:
