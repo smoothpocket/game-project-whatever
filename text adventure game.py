@@ -28,8 +28,6 @@ def print_map():
         |______|___|___|__Entrance_|__________|
     """))
 
-
-
 def print_gps(list):
     # Shows location
     x = 0
@@ -73,7 +71,7 @@ def restart_after_death(answer):
 # separating into two combats for attack1 and attack2
 def combat1(attacker, defender):
     # check if attacker has at least 1 charge for the attack
-        if (attacker[5] > 0):
+        if attacker[5] > 0:
         # lowers defender's hp based on attacker's base attack and particular attack multiplier minus the defender's def
             print(attacker[0], " attacked ", defender[0], " with their ", attacker[4], " move!")
             defender[2] = defender[2] - ((attacker[3] * attacker[6]) - defender[10])
@@ -90,7 +88,7 @@ def combat1(attacker, defender):
         crackhead[0:] = defender[0:]
 
 def combat2(attacker, defender):
-        if (attacker[8] > 0):
+        if attacker[8] > 0:
             print(attacker[0], " attacked ", defender[0], " with their ", attacker[4], " move!")
             defender[2] = defender[2] - ((attacker[3] * attacker[9]) - defender[10])
             attacker[5] = attacker[5] - 1
@@ -147,10 +145,7 @@ while True:
         [Z] Quit Game
     """))
 
-    power_on = ''
-    power_on = input("Input:")
-
-    if power_on == "Q":
+    if input("Input: ") == "Q":
         print("\n" * 40)
         print(dedent("""
             Francis Magilicutty, private eye, receives a case of a missing girl said to be
@@ -164,10 +159,10 @@ while True:
         """))
 
         in_combat = False
-        francis_dead = False
+        francis_is_dead = False
         has_moved_a_square_this_turn = False
         clicker = False
-        while francis_dead == False:
+        while not francis_is_dead:
             clicker = False
             user_input = input("\nEnter a command: ")
 
@@ -187,28 +182,27 @@ while True:
             elif user_input == "my stats":
                 print_stats()
                 clicker = True
+
             elif user_input == "exit":
                 print("Are you sure you want to quit? Progress will not be saved!")
                 clicker = True
-                response = input("Press [y] if you're sure, or any other letter to continue: ")
-                if response == "y":
+                if input("Press [y] if you're sure, or any other letter to continue: ") == "y":
                     print("GAME OVER")
                     exit()
+
             elif user_input == "map":
                 print_map()
                 clicker = True
+
             elif user_input == "gps":
                 print_gps(gps_grid)
                 clicker = True
 
-            if in_combat == False:
-
-
-                #move checks
+            if not in_combat:
                 if user_input == "move north":
                     if gps_grid[2][3]=="X":
                         engi_switch = False
-                        while engi_switch == False:
+                        while not engi_switch:
                             engi_switch = True
                             x = 0
                             print(dedent("""
@@ -216,8 +210,7 @@ while True:
                                 
                                 [1] Chemical Engineering Room
                             """))
-                            an = input('Where do you want to go now?: ')
-                            if an == '1':
+                            if input('Where do you want to go now?: ') == '1':
                                 while x < 10:
                                     choice = input(
                                         "Looking like an ordinary chem, you see some chemical that might come in handy. Do you want it(y/n): ")
