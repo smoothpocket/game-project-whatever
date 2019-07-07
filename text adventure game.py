@@ -157,9 +157,9 @@ while True:
         """))
 
         while True:
-            user_input = input("\nEnter a command: ")
+            command = input("\nEnter a command: ")
 
-            if user_input == "help":
+            if command == "help":
                 print(dedent("""
                     COMMAND:                       EFFECT
                     'move north/south/east/west'...moves character to the square above/below/left/right of the square they're on
@@ -172,22 +172,22 @@ while True:
                     'my stats'.....................overviews Francis' updated stats
                 """))
 
-            elif user_input == "my stats":
+            elif command == "my stats":
                 print_stats()
 
-            elif user_input == "exit":
+            elif command == "exit":
                 print("Are you sure you want to quit? Progress will not be saved!")
                 if input("Press [y] if you're sure, or any other letter to continue: ") == "y":
                     print("GAME OVER")
                     exit()
 
-            elif user_input == "map":
+            elif command == "map":
                 print_map()
 
-            elif user_input == "gps":
+            elif command == "gps":
                 print_gps()
 
-            elif user_input == "move north":
+            elif command == "move north":
                 if gps_grid[2][3]=="X":
                     engi_switch = False
                     while not engi_switch:
