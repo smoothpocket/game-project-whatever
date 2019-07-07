@@ -125,15 +125,14 @@ def doomsday(attacker, defender):
         print(defender.name + " has been revived with 1HP and escapes.")
         return False
 
-def face_wall(victim):
+def face_wall():
     print(dedent("""
         Francis, not consulting his map or common sense before deciding where he wanted
         to go, turned and walked directly into the wall of a nearby building. This sheer
         act of stupidity causes a nosebleed that reduces Francis' health significantly.
     """))
 
-    victim.hp -= 10
-    return victim.hp
+    francis.hp -= 10
 
 while True:
     print(dedent("""
@@ -258,4 +257,4 @@ while True:
                     gps_grid[4][3] = "-"
                     gps_grid[3][3] = "X"
                 else:
-                    francis[2] = face_wall(francis)
+                    face_wall()
