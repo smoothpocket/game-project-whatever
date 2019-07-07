@@ -92,8 +92,7 @@ def combat(attacker, defender, index):
         print("Attacker now has ", attacker.attack[index].uses, " charges left of their ", attacker.attack[index].name, " move.")
 
         if defender.hp <= 0:
-            if doomsday(attacker, defender):
-                os.execl(sys.executable, sys.executable, *sys.argv)
+            doomsday(attacker, defender)
     else:
         print("Francis does not have any charge left for that move!")
 
@@ -118,12 +117,11 @@ def doomsday(attacker, defender):
                 (["Returning to title screen and wiping board..."]) * 2) +
                 (["\n" * 30])
             )
-            return True
+            os.execl(sys.executable, sys.executable, *sys.argv)
     else:
         print("Despite all odds, a miracle of luck recovers the fallen defender, reviving him with 1HP")
         print(defender.name + " has been revived with 1HP and escapes.")
         defender.hp = 1
-        return False
 
 def face_wall():
     print(dedent("""
