@@ -74,13 +74,6 @@ def pick_item(item, item_list):
     item_list.append(item)
     print(item, "has been added to your inventory!")
 
-def restart_after_death(answer):
-    """After the character dies, this function is called to ask the user if he wants to restart or quit the game."""
-    if answer=="y":
-        print('Start at the beginning')
-    else:
-        print("Quit the game")
-
 def combat(attacker, defender, index):
     if attacker.attack[index].uses >= 1:
         attacker.attack[index].uses -= 1
