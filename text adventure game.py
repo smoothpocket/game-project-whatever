@@ -108,9 +108,9 @@ def combat(attacker, defender, index):
 def doomsday(attacker, defender):
     print("The defender is badly wounded and at the doors of death. In his last efforts, he hopes his luck will give him a second breath...")
     # random.randint(0,100) makes a random number including 0 to including 100. attacker/defender[11] is the luck multiplier
-    death_num_a = ((random.randint(0, 100)) * attacker.luck) / 1  # "/1" to round to nearest whole number
-    death_num_b = ((random.randint(0, 100)) * defender.luck) / 1
-    if death_num_a > death_num_b:
+    attacker_roll = ((random.randint(0, 100)) * attacker.luck) / 1  # "/1" to round to nearest whole number
+    defender_roll = ((random.randint(0, 100)) * defender.luck) / 1
+    if attacker_roll > defender_roll:
         print("Battered and bruised, the defender is unable to recover before the attacker throws his killing blow.")
         print(defender.name + " has died.")
         if defender.name == "Francis":
