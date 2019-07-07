@@ -8,10 +8,9 @@ francis=["Francis", "the hero", 100, 10, "Punch", 5, 2, "Kick", 10, 4, 5, 50, 20
 items=[]
 crackhead=['crackhead', 'he needs his fix', 20, 5, "Injection", 2, 4, 'Scratch', 100, 1.5, 5, 50, 5]
 
-#The grid that only shows where the character is (5x5), char is denoted by an "X"
-gps_grid=[['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','X','-']]
-#breadcrumb_grid shows what spaces francis has travelled
-breadcrumb_grid =[['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','-','-'],['-','-','-','+','-']]
+# The gps_grid shows where Francis currently is. The breadcrumb_grid shows where Francis has been
+gps_grid,  breadcrumb_grid = ["-" * 5] * 5, ["-" * 5] * 5
+gps_grid[4][3], breadcrumb_grid[4][3] = 'X', '+'
 
 def print_map():
     print(dedent("""
