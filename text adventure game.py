@@ -82,38 +82,15 @@ def restart_after_death(answer):
     else:
         print("Quit the game")
 
-def combat1(attacker, defender):
-        if attacker.attack[0].uses >= 1:
-            attacker.attack[0].uses -= 1
-            print(attacker.name, " attacked ", defender.name, " with their ", attacker.attack1.name, " move!")
+def combat(attacker, defender, index):
+    if attacker.attack[index].uses >= 1:
+        attacker.attack[index].uses -= 1
+        print(attacker.name, " attacked ", defender.name, " with their ", attacker.attack[index].name, " move!")
 
-            damage_dealt = (attacker.base_attack * attacker.attack[0].multiplier) - defender.base_defense
-            defender.hp -= damage_dealt
-            print(defender.name, " took ", damage_dealt, "points of damage from ", attacker.name, ", dropping ", defender.name, " to ", defender.hp, " hit points.")
-            print("Attacker now has ", attacker.attack[0].uses, " charges left of their ", attacker.attack[0].name, " move.")
-
-            if defender.hp <= 0:
-                if doomsday(attacker, defender):
-                    os.execl(sys.executable, sys.executable, *sys.argv)
-        else:
-            print("Francis does not have any charge left for that move!")
-
-        global francis
-        francis = attacker
-        global crackhead
-        crackhead = defender
-
-def combat2(attacker, defender):
-    if attacker.attack[1].uses >= 1:
-        attacker.attack[1].uses -= 1
-        print(attacker.name, " attacked ", defender.name, " with their ", attacker.attack1.name, " move!")
-
-        damage_dealt = (attacker.base_attack * attacker.attack[1].multiplier) - defender.base_defense
+        damage_dealt = (attacker.base_attack * attacker.attack[index].multiplier) - defender.base_defense
         defender.hp -= damage_dealt
-        print(defender.name, " took ", damage_dealt, "points of damage from ", attacker.name, ", dropping ",
-              defender.name, " to ", defender.hp, " hit points.")
-        print("Attacker now has ", attacker.attack[1].uses, " charges left of their ", attacker.attack[1].name,
-              " move.")
+        print(defender.name, " took ", damage_dealt, "points of damage from ", attacker.name, ", dropping ", defender.name, " to ", defender.hp, " hit points.")
+        print("Attacker now has ", attacker.attack[index].uses, " charges left of their ", attacker.attack[index].name, " move.")
 
         if defender.hp <= 0:
             if doomsday(attacker, defender):
@@ -246,9 +223,9 @@ while True:
                                             print("The crackhead attack multiplier is now 8.")
                                         move = input("Will you throw a [punch], or a [kick]? ")
                                         if move == "punch":
-                                            combat1(francis, crackhead)
+                                            combat(francis, crackhead, 0)
                                         if move == "kick":
-                                            combat2(francis, crackhead)
+                                            combat(francis, crackhead, 1)
                                         print("Crackhead swings at you for 10 damage!")
                                         francis.hp -= 10
                                         if francis.hp <= 0:
