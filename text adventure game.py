@@ -2,11 +2,29 @@ from __future__ import print_function
 import random
 from textwrap import dedent
 
-# Character lists. Each character has a list of profile data as:
-# [Name, description/hint, HP, baseATK, attack1Name, attack1Uses, attack1Multiplier, attack2Name, attack2Uses, attack2Multiplier, baseDEF, luck (1-100), gold]
-francis=["Francis", "the hero", 100, 10, "Punch", 5, 2, "Kick", 10, 4, 5, 50, 20]
-items=[]
-crackhead=['crackhead', 'he needs his fix', 20, 5, "Injection", 2, 4, 'Scratch', 100, 1.5, 5, 50, 5]
+
+items = []
+
+class Attack():
+    def __init__(self, name, uses, multiplier):
+        self.name = name
+        self.uses = uses
+        self.multiplier = multiplier
+
+# Each character has profile data, where 0 <= `luck` <= 100
+class Character():
+    def __init__(self, name, description, hp, base_attack, attack, base_defense, luck, gold):
+        self.name = name
+        self.description = description
+        self.hp = hp
+        self.base_attack = base_attack
+        self.attack = attack
+        self.base_defense = base_defense
+        self.luck = luck
+        self.gold = gold
+
+francis = Character("Francis", "the hero", 100, 10, [Attack("Punch", 5, 2), Attack("Kick", 10, 4)], 5, 50, 20)
+crackhead = Character("Crackhead", "he needs his fix", 20, 5, [Attack("Injection", 2, 4), Attack("Scratch", 100, 1.5)], 5, 50, 5)
 
 # The gps_grid shows where Francis currently is. The breadcrumb_grid shows where Francis has been
 gps_grid,  breadcrumb_grid = ["-" * 5] * 5, ["-" * 5] * 5
@@ -34,19 +52,22 @@ def print_gps():
         print()
 
 def print_stats():
-    print("Name: ", francis[0])
-    print('Description: ', francis[1])
-    print('HP: ', francis[2])
-    print("BaseATK: ", francis[3])
-    print('attack1Name: ', francis[4])
-    print('attack1Uses: ', francis[5])
-    print('attack1Multiplier: ', francis[6])
-    print('attack2Name: ', francis[7])
-    print('attack2Uses: ', francis[8])
-    print('attack2Multiplier: ', francis[9])
-    print('baseDEF: ', francis[10])
-    print('luck: ', francis[11])
-    print('gold: ', francis[12])
+    print("Name: ", francis.name)
+    print('Description: ', francis.description)
+    print('HP: ', francis.hp)
+    print("BaseATK: ", francis.base_attack)
+
+    print('attack1Name: ', francis.attack[0].name)
+    print('attack1Uses: ', francis.attack[0].uses)
+    print('attack1Multiplier: ', francis.attack[0].multiplier)
+
+    print('attack2Name: ', francis.attack[1].name)
+    print('attack2Uses: ', francis.attack[1].uses)
+    print('attack2Multiplier: ', francis.attack[1].multiplier)
+
+    print('baseDEF: ', francis.base_defense)
+    print('luck: ', francis.luck)
+    print('gold: ', francis.gold)
 
 def pick_item(item, item_list):
     '''Once an item is obtained, this function can be called to select it from a menu.'''
@@ -61,52 +82,61 @@ def restart_after_death(answer):
     else:
         print("Quit the game")
 
-# attacker and defender objects are lists with their stats, preassigned from character status
-# separating into two combats for attack1 and attack2
 def combat1(attacker, defender):
-    # check if attacker has at least 1 charge for the attack
-        if attacker[5] > 0:
-        # lowers defender's hp based on attacker's base attack and particular attack multiplier minus the defender's def
-            print(attacker[0], " attacked ", defender[0], " with their ", attacker[4], " move!")
-            defender[2] = defender[2] - ((attacker[3] * attacker[6]) - defender[10])
-            attacker[5] = attacker[5] - 1
-            print(defender[0], " took ", (attacker[3] * attacker[6] - defender[10]), "points of damage from ", attacker[0], ", dropping ", defender[0], " to ", defender[2], " hit points.")
-            print("Attacker now has ", attacker[5], " charges left of their ", attacker[4], " move.")
+        if attacker.attack[0].uses >= 1:
+            attacker.attack[0].uses -= 1
+            print(attacker.name, " attacked ", defender.name, " with their ", attacker.attack1.name, " move!")
 
-            if defender [2] <1:
-                if doomsday(attacker, defender) == True:
+            damage_dealt = (attacker.base_attack * attacker.attack[0].multiplier) - defender.base_defense
+            defender.hp -= damage_dealt
+            print(defender.name, " took ", damage_dealt, "points of damage from ", attacker.name, ", dropping ", defender.name, " to ", defender.hp, " hit points.")
+            print("Attacker now has ", attacker.attack[0].uses, " charges left of their ", attacker.attack[0].name, " move.")
+
+            if defender.hp <= 0:
+                if doomsday(attacker, defender):
                     os.execl(sys.executable, sys.executable, *sys.argv)
         else:
             print("Francis does not have any charge left for that move!")
-        francis[0:] = attacker[0:]
-        crackhead[0:] = defender[0:]
+
+        global francis
+        francis = attacker
+        global crackhead
+        crackhead = defender
 
 def combat2(attacker, defender):
-        if attacker[8] > 0:
-            print(attacker[0], " attacked ", defender[0], " with their ", attacker[4], " move!")
-            defender[2] = defender[2] - ((attacker[3] * attacker[9]) - defender[10])
-            attacker[5] = attacker[5] - 1
-            print(defender[0], " took ", (attacker[3] * attacker[9] - defender[10]), "points of damage from ", attacker[0], ", dropping ", defender[0], " to ", defender[2], " hit points.")
-            print("Attacker now has ", attacker[5], " charges left of thier ", attacker[4], " move.")
-            if defender[2] < 1:
-                if doomsday(attacker, defender) == True:
-                    os.execl(sys.executable, sys.executable, *sys.argv)
-        else:
-            print("Francis does not have any charge left for that move!")
-        francis[0:] = attacker[0:]
-        crackhead[0:] = defender[0:]
+    if attacker.attack[1].uses >= 1:
+        attacker.attack[1].uses -= 1
+        print(attacker.name, " attacked ", defender.name, " with their ", attacker.attack1.name, " move!")
+
+        damage_dealt = (attacker.base_attack * attacker.attack[1].multiplier) - defender.base_defense
+        defender.hp -= damage_dealt
+        print(defender.name, " took ", damage_dealt, "points of damage from ", attacker.name, ", dropping ",
+              defender.name, " to ", defender.hp, " hit points.")
+        print("Attacker now has ", attacker.attack[1].uses, " charges left of their ", attacker.attack[1].name,
+              " move.")
+
+        if defender.hp <= 0:
+            if doomsday(attacker, defender):
+                os.execl(sys.executable, sys.executable, *sys.argv)
+    else:
+        print("Francis does not have any charge left for that move!")
+
+    global francis
+    francis = attacker
+    global crackhead
+    crackhead = defender
 
 # doomsday() is a function that handles the procedure when a char's HP drops to zero or below zero. Luck multiplier is
 # used to see if he survives with 1hp
 def doomsday(attacker, defender):
     print("The defender is badly wounded and at the doors of death. In his last efforts, he hopes his luck will give him a second breath...")
     # random.randint(0,100) makes a random number including 0 to including 100. attacker/defender[11] is the luck multiplier
-    death_num_a = ((random.randint(0, 100)) * attacker[11]) / 1  # "/1" to round to nearest whole number
-    death_num_b = ((random.randint(0, 100)) * defender[11]) / 1
+    death_num_a = ((random.randint(0, 100)) * attacker.luck) / 1  # "/1" to round to nearest whole number
+    death_num_b = ((random.randint(0, 100)) * defender.luck) / 1
     if death_num_a > death_num_b:
         print("Battered and bruised, the defender is unable to recover before the attacker throws his killing blow.")
-        print(defender[0] + " has died.")
-        if defender[0] == "Francis":
+        print(defender.name + " has died.")
+        if defender.name == "Francis":
             print("\n".join(
                 (["GAME OVER"] * 2) +
                 (["Returning to title screen and wiping board..."]) * 2) +
@@ -115,7 +145,7 @@ def doomsday(attacker, defender):
             return True
     else:
         print("Despite all odds, a miracle of luck recovers the fallen defender, reviving him with 1HP")
-        print(defender[0] + " has been revived with 1HP and escapes.")
+        print(defender.name + " has been revived with 1HP and escapes.")
         return False
 
 def face_wall(victim):
@@ -125,8 +155,8 @@ def face_wall(victim):
         act of stupidity causes a nosebleed that reduces Francis' health significantly.
     """))
 
-    victim[2] = victim[2]-10
-    return victim[2]
+    victim.hp -= 10
+    return victim.hp
 
 while True:
     print(dedent("""
@@ -196,8 +226,7 @@ while True:
                         """))
                         if input('Where do you want to go now?: ') == '1':
                             while x < 10:
-                                choice = input(
-                                    "Looking like an ordinary chem, you see some chemical that might come in handy. Do you want it(y/n): ")
+                                choice = input("Looking like an ordinary chem, you see some chemical that might come in handy. Do you want it(y/n): ")
                                 if choice == 'y':
                                     pick_item("chemical", items)
                                     print(dedent("""
@@ -205,24 +234,24 @@ while True:
                                         You reply with 'No', being the good student you are. He pulls out a needle, ready to fight.
                                     """))
 
-                                    while crackhead[2] > 0:
-                                        if crackhead[2] < 5:
-                                            crackhead[6] = 16
-                                            print("The crackhead attackmultiplier is now 16.")
-                                        elif crackhead[2] < 10:
-                                            crackhead[6] = 12
-                                            print("The crackhead attackmultiplier is now 12.")
-                                        elif crackhead[2] < 15:
-                                            crackhead[6] = 8
-                                            print("The crackhead attackmultiplier is now 8.")
+                                    while crackhead.hp > 0:
+                                        if crackhead.hp < 5:
+                                            crackhead.base_attack = 16
+                                            print("The crackhead attack multiplier is now 16.")
+                                        elif crackhead.hp < 10:
+                                            crackhead.base_attack = 12
+                                            print("The crackhead attack multiplier is now 12.")
+                                        elif crackhead.hp < 15:
+                                            crackhead.base_attack = 8
+                                            print("The crackhead attack multiplier is now 8.")
                                         move = input("Will you throw a [punch], or a [kick]? ")
                                         if move == "kick":
                                             combat2(francis, crackhead)
                                         if move == "punch":
                                             combat1(francis, crackhead)
                                         print("Crackhead swings at you for 10 damage!")
-                                        francis[2] = francis[2]-10
-                                        if francis[2] < 1:
+                                        francis.hp -= 10
+                                        if francis.hp <= 0:
                                             doomsday(crackhead, francis)
 
 
